@@ -1,38 +1,125 @@
-.App {
-  text-align: center;
+@import 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap';
+
+.calculator-layout {
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%); 
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App  {
+  display: flex;
+  justify-content: center;
+  max-width: 875px;
+  width: 100%;
+  /* visibility: hidden; */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.calc-form {
+  width: 50%;
+  background-color: rgba(211, 211, 211 , 0.3);
+  padding:30px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.form-layout{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap:15px;
 }
 
-.App-link {
-  color: #61dafb;
+.input-container, .App{border:1px solid rgba(43, 42, 42, .5);}
+
+.input-container {
+  background-color: white;
+  display: flex;
+  padding:10px 2px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input-container > label {padding:0 10px}
+
+.calc-wrapper {
+  display: flex;
+  gap:30px;
+}
+
+.calc-wrapper > button {
+  background-color: rgba(4, 13, 141, .9);
+  color:white;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding:5px 20px;
+}
+
+input, button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: .875rem;
+  font-weight: 700;
+  border-color: transparent;
+  background-color: transparent;
+  width: 100%;
+}
+
+input:focus {outline:none}
+
+label {
+  opacity: .4;
+  font-weight: 700;
+}
+
+.result-section {
+  display: flex;
+  flex-direction: column;
+  padding:30px;
+  justify-content: space-between;
+  text-align:center;
+  width: 50%;
+}
+
+.compare-wrapper {border:3px solid rgb(251, 190, 78);}
+.compare-rates {
+  font-size: 1rem;
+  line-height: 3px;
+  padding:8px;
+  font-weight: 600;
+}
+
+
+.paid-principals div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.principal-etiquette, .interest-etiquette {
+  font-weight: initial;
+  opacity: 1;
+  max-width: 250px;
+}
+
+#interest {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.shake {
+  border-color: red;
+  animation-name:shake;
+  animation-duration: .1s;
+  animation-iteration-count: 6;
+  animation-direction: linear;
+}
+
+@keyframes shake {
+  0% {transform: translate(5px, 0px);}
+  100% {transform: translate(-5px, 0px);}
+}
+
+.history-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.history {
+  display: flex;
+  gap:20px;
 }
