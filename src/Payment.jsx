@@ -10,9 +10,7 @@ class Payment extends React.Component {
         <div className={`input-container ${invalidPayment ? 'shake' : ''}` }>
           <input onChange={trackState} type='text' name='payment' autoComplete="off"/>
         </div>
-        <small>Your Payment should be more than 1% <strong>{Number(minPayment).toFixed(2)}</strong> + 
-          the interest <strong>{Number(interestPaid).toFixed(2)}</strong> (${(Number(minPayment) + Number(interestPaid)).toFixed(2)})
-        </small>
+        <small>Your Payment should be more than 1% <strong>{minPayment}$</strong></small> 
         <br/>
         <br/>
         <div>The Interest to be paid: {interestPaid}</div>

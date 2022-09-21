@@ -2,21 +2,25 @@ import React from "react";
 
 class History extends React.Component {
   render() {
-   const {history, deptAmount} = this.props; 
+    const {history} = this.props; 
     return(
       <div className="history-wrapper">
       {history.map((payment) => (
         <div key={payment} className="history">
           <div className="history">
-            Your Payment
-            <div>{payment}</div>
+             Your Payment
+            <div>{Number(payment.payment).toFixed(2)}</div>
+          </div>
+          <div className="history">
+          The rest of the dept:
+            <div>{Number(payment.deptAmount).toFixed(2)}</div>
+          </div>
+          <div className="history">
+            Interest paid:
+            <div>{Number(payment.interestPaid).toFixed(2)}</div>
           </div>
         </div>
       ))}
-        <div className="history">
-          The rest of the dept:
-          <div>{deptAmount}</div>
-        </div>
       </div>
     )
   }

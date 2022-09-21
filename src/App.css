@@ -24,7 +24,8 @@
 .form-layout{
   display: flex;
   flex-direction: column;
-  gap:15px;
+  height: 100%;
+  justify-content: space-between;
 }
 
 .input-container, .App{border:1px solid rgba(43, 42, 42, .5);}
@@ -73,6 +74,7 @@ label {
   justify-content: space-between;
   text-align:center;
   width: 50%;
+  gap:30px;
 }
 
 .compare-wrapper {border:3px solid rgb(251, 190, 78);}

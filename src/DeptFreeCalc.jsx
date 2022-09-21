@@ -10,8 +10,6 @@ class Calculator extends React.Component {
       history: [],
       deptAmount: '',
       interest:'',
-      yearsToDeptFree: '',
-      monthsToDeptFree: '',
       monthlyPayments: '',
       interestPaid: '',
       payment: '',
@@ -29,35 +27,39 @@ this.setState((prevState) => ({
 
 handleSubmit = (e) => {
   e.preventDefault();
-  const minPayment = Number(((this.state.deptAmount * 0.01).toFixed(2))) + Number(this.state.interestPaid);
+  const minPayment = Number(this.state.deptAmount * 0.01);
   const interestPaid = (((this.state.interest / 100)  / 12) * this.state.deptAmount).toFixed(2);
-  const timeToFree = Number(this.state.monthsToDeptFree) + Number((this.state.yearsToDeptFree * 12));
-  const normalPayment = ((this.state.deptAmount / timeToFree)).toFixed(2);
-  const monthlyPayment = (Number(interestPaid) + Number(normalPayment)).toFixed(2)
 
   this.setState({
-    monthlyPayments: monthlyPayment,
+    monthlyPayments: minPayment,
     interestPaid: interestPaid,
-    minPayment: minPayment,
+    minPayment: (Number(minPayment) + Number(interestPaid)),
   })
 }
 
 boxClick = (e) => {
   e.preventDefault();
-  if (this.state.payment > this.state.minPayment) {
+  if (this.state.payment >= this.state.minPayment) {
     this.successfulPayment();
-  }
+  } 
 }
 
 successfulPayment = () => {
+  
   this.setState(( prevState ) => {
     const deptAmount = (this.state.deptAmount - (this.state.payment - this.state.interestPaid));
+    const interestPaid = ((this.state.interest / 100)  / 12) * deptAmount;
+    const minPayment = Number((Number(deptAmount) * 0.01) + Number(interestPaid)).toFixed(2);
+    const newPayment = {
+      payment: this.state.payment,
+      deptAmount: deptAmount,
+      interestPaid: this.state.interestPaid,
+    }
     return {
       deptAmount: deptAmount,
-      history: [...prevState.history, this.state.payment],
-      minPayment: deptAmount * 0.01,
-      interestPaid: ((this.state.interest / 100)  / 12) * deptAmount,
-    
+      history: [...prevState.history, newPayment],
+      minPayment: minPayment,
+      interestPaid: interestPaid,
   }})
   this.handleFinalPay();
 } 
@@ -66,7 +68,7 @@ handleFinalPay = () => {
   if (this.state.deptAmount <= 100) {
     this.setState({
       minPayment: Number(this.state.deptAmount + (this.state.deptAmount * 0.01)).toFixed(2),
-      deptAmount: 'Dept Free 💵', 
+      deptAmount: 0, 
     })
   }
 }
@@ -75,9 +77,7 @@ handleFinalPay = () => {
   render() {
     const inputs = [
       {id:'1',title: 'Loan Amount', name: 'deptAmount', label: '$', wrapper:false},
-      {id:'2',title: 'Loan Term in months', name:'yearsToDeptFree', wrapper: false},
-      {id:'3',title: 'Loan Term in years', name:'monthsToDeptFree', wrapper:false},
-      {id:'4',title: 'Interest rate per year', label:'$', name:'interest', wrapper:true},
+      {id:'2',title: 'Interest rate per year', label:'$', name:'interest', wrapper:true},
     ]
     return ( 
       <div className="calculator-layout">
@@ -106,17 +106,17 @@ handleFinalPay = () => {
       <div className="result-section">
         Monthly Payments 
 
-        <div id="interest">{this.state.monthlyPayments}$</div>
+        <div id="interest">{Number(this.state.minPayment).toFixed(2)}$</div>
         <div className="paid-principals">
           <div>
             <label className="principal-etiquette">Total Principal Paid</label>
             <div>
-              {this.state.deptAmount}</div>
+              {Number(this.state.deptAmount).toFixed(2)}</div>
           </div>
           <hr/>
           <div>
             <label className="interest-etiquette">Total Interest Paid</label>
-            <div>{this.state.interestPaid}</div>
+            <div>{Number(this.state.interestPaid).toFixed(2)}</div>
           </div>
         </div>
         <div className="input-container compare-wrapper">
@@ -127,14 +127,13 @@ handleFinalPay = () => {
       </div>
         <History 
           history={this.state.history}
-          deptAmount={this.state.deptAmount}
         />
         <Payment 
-          deptAmount={this.state.deptAmount}
+          deptAmount={Number(this.state.deptAmount).toFixed(2)}
           trackState={this.handleObj}
           boxClick={this.boxClick}
-          interestPaid={this.state.interestPaid}
-          invalidPayment={Number(this.state.minPayment) + Number(this.state.interestPaid) > this.state.payment}
+          interestPaid={Number(this.state.interestPaid).toFixed(2)}
+          invalidPayment={this.state.minPayment > this.state.payment}
           minPayment={this.state.minPayment}
       />
       </div>
