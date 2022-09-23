@@ -39,7 +39,7 @@ handleSubmit = (e) => {
 
 boxClick = (e) => {
   e.preventDefault();
-  if (this.state.payment >= this.state.minPayment) {
+  if (Number(this.state.payment) >= Number(this.state.minPayment)) {
     this.successfulPayment();
   } 
 }
@@ -133,7 +133,7 @@ handleFinalPay = () => {
           trackState={this.handleObj}
           boxClick={this.boxClick}
           interestPaid={Number(this.state.interestPaid).toFixed(2)}
-          invalidPayment={this.state.minPayment > this.state.payment}
+          invalidPayment={Number(this.state.minPayment) > Number(this.state.payment)}
           minPayment={this.state.minPayment}
       />
       </div>
